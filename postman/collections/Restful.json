@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "5494dd73-63fa-42fe-b59f-241be0df49c9",
+		"name": "Restful",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29142931-5494dd73-63fa-42fe-b59f-241be0df49c9"
+	},
+	"item": [
+		{
+			"name": "CreateBooking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "77804616-2f7d-4218-b06f-b328859cd145",
+						"exec": [
+							"console.clear();\r",
+							"\r",
+							"const firstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+							"pm.collectionVariables.set(\"fakeFirstName\", firstName);\r",
+							"\r",
+							"const lastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+							"pm.collectionVariables.set(\"fakeLastName\", lastName);\r",
+							"\r",
+							"const depositpaid = pm.variables.replaceIn('{{$randomBoolean}}');\r",
+							"pm.collectionVariables.set(\"fakeDepositpaid\", depositpaid);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b14c591-299d-4717-9eae-57a56302b39f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//yanıt verilerinin doğruluğunu kontrol et \r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"firstname\" ,function(){\r",
+							"    pm.expect(jsonData.booking.firstname).to.eql(pm.collectionVariables.get(\"fakeFirstName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"lastname\" ,function(){\r",
+							"    pm.expect(jsonData.booking.lastname).to.eql(pm.collectionVariables.get(\"fakeLastName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test data type of the response\", ()=>{\r",
+							"    pm.expect(jsonData.booking.firstname).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.booking.firstname).to.not.be.null;\r",
+							"    pm.expect(jsonData.booking.firstname).to.not.be.undefined;\r",
+							"    pm.expect(jsonData.booking.depositpaid).to.be.a(\"boolean\");\r",
+							"})\r",
+							"\r",
+							"//değişken kaldırma\r",
+							"pm.collectionVariables.unset(\"fakeDepositpaid\");\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "e0e91214-6900-49cd-a9d7-504670c316ed",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"{{fakeFirstName}}\",\r\n    \"lastname\": \"{{fakeLastName}}\",\r\n    \"totalprice\": 111,\r\n    \"depositpaid\": {{fakeDepositpaid}},\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2013-02-23\",\r\n        \"checkout\": \"2014-10-23\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "e2f96e88-2973-4721-bc3b-9348bbebbfa4",
+			"key": "fakeFirstName",
+			"value": ""
+		},
+		{
+			"id": "96b2048c-2557-4a7d-b20a-450868511c31",
+			"key": "fakeLastName",
+			"value": ""
+		}
+	]
+}
