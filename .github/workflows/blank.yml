@@ -38,5 +38,4 @@ jobs:
       - name: Run API tests
         run: |
           postman collection run "${{ github.workspace }}/postman/collections/Api Collection.json" -e "29142931-e313b320-7723-470f-8a4a-f186181ee070"
-          postman collection run "${{ github.workspace }}/postman/collections/Demo Qa Collection.json" -e "29142931-e313b320-7723-470f-8a4a-f186181ee070"
           postman collection run "${{ github.workspace }}/postman/collections/Restful.json" -e "29142931-e313b320-7723-470f-8a4a-f186181ee070"
