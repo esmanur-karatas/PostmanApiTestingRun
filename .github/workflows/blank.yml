@@ -57,7 +57,7 @@ jobs:
         run: ls -al
 
       - name: Upload HTML Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v3
         with:
           name: newman-reports
           path: |
